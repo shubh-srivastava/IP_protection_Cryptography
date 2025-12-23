@@ -4,18 +4,20 @@
 #include <string>
 #include <ctime>
 
+using namespace std;
+
 struct Block {
     int index;
     unsigned long prevHash;
     unsigned long ipHash;
     unsigned long blockHash;
-    std::string creatorID;
+    string creatorID;
     time_t timestamp;
 
     Block(int idx,
           unsigned long prev,
           unsigned long ip,
-          const std::string &creator,
+          const string &creator,
           unsigned long hash)
         : index(idx),
           prevHash(prev),

@@ -1,6 +1,9 @@
 #include "crypto.h"
+using namespace std;
 
-unsigned long djb2Hash(const std::string &input) {
+// can use a better hashing protocol, but will be very computaionally high to run local
+// this is proof of concept rpoject, therefore djb2Hash used.
+unsigned long djb2Hash(const string &input) {
     unsigned long hash = 5381;
     for (char c : input) {
         hash = ((hash << 5) + hash) + c;

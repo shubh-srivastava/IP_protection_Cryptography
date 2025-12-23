@@ -236,3 +236,11 @@ This project demonstrates:
 * Practical Zero-Knowledge Proof usage
 * Secure system design principles
 * Cryptographic protocol implementation in C++
+
+---
+## FootNotes ()
+* user.h and user.cpp added for architecture purposes, can be used to independently add or update the user info on the block.
+
+* the ZKP proof is just proof of concept and not cryptographically strong to implement to the real world.(small prime numbers used)
+
+* the hashing mechanism used is djb2 which is a light-weight and easy to implement hashing technique, but not used in real implementations.

@@ -2,8 +2,11 @@
 #include "crypto.h"
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 
-//two prime numbers used for ZKP, very large in practice
+using namespace std;
+
+// two prime numbers used for ZKP, very large in practice
 static const int P = 7057;
 static const int G = 5;
 
@@ -13,18 +16,19 @@ Blockchain::Blockchain() {
     chain.push_back(genesis);
 }
 
+// using the hash of the prev-block to calculate next.
 unsigned long Blockchain::computeBlockHash(const Block &b) {
-    std::string data =
-        std::to_string(b.index) +
-        std::to_string(b.prevHash) +
-        std::to_string(b.ipHash) +
+    string data =
+        to_string(b.index) +
+        to_string(b.prevHash) +
+        to_string(b.ipHash) +
         b.creatorID +
-        std::to_string(b.timestamp);
+        to_string(b.timestamp);
 
     return djb2Hash(data);
 }
 
-bool Blockchain::registerUser(const std::string &userID) {
+bool Blockchain::registerUser(const string &userID) {
     if (users.count(userID)) return false;
 
     int privateKey = rand() % (P - 2) + 1;
@@ -34,17 +38,17 @@ bool Blockchain::registerUser(const std::string &userID) {
     return true;
 }
 
-bool Blockchain::createBlock(const std::string &creatorID, const std::string &content) {
+bool Blockchain::createBlock(const string &creatorID, const string &content) {
     if (!users.count(creatorID)) {
-        std::cout << "User not registered.\n";
+        cout << "User not registered.\n";
         return false;
     }
 
     unsigned long ipHash = djb2Hash(content);
 
     if (ipRegistry.count(ipHash)) {
-        std::cout << "Duplicate IP detected. Owner: "
-                  << ipRegistry[ipHash] << "\n";
+        cout << "Duplicate IP detected. Owner: "
+             << ipRegistry[ipHash] << "\n";
         return false;
     }
 
@@ -58,7 +62,7 @@ bool Blockchain::createBlock(const std::string &creatorID, const std::string &co
     chain.push_back(temp);
     ipRegistry[ipHash] = creatorID;
 
-    std::cout << "Block created successfully.\n";
+    cout << "Block created successfully.\n";
     return true;
 }
 
@@ -66,22 +70,22 @@ bool Blockchain::createBlock(const std::string &creatorID, const std::string &co
  Proper Schnorr ZKP:
  Prove knowledge of privateKey without revealing it
 */
-bool Blockchain::verifyOwnership(const std::string &creatorID,
-                                 const std::string &content) {
+bool Blockchain::verifyOwnership(const string &creatorID,
+                                 const string &content) {
     if (!users.count(creatorID)) {
-        std::cout << "Verification failed: user not registered.\n";
+        cout << "Verification failed: user not registered.\n";
         return false;
     }
 
     unsigned long ipHash = djb2Hash(content);
 
     if (!ipRegistry.count(ipHash)) {
-        std::cout << "Verification failed: content is not registered on the blockchain.\n";
+        cout << "Verification failed: content is not registered on the blockchain.\n";
         return false;
     }
 
     if (ipRegistry[ipHash] != creatorID) {
-        std::cout << "Verification failed: content is owned by another user.\n";
+        cout << "Verification failed: content is owned by another user.\n";
         return false;
     }
 
@@ -97,24 +101,22 @@ bool Blockchain::verifyOwnership(const std::string &creatorID,
     int right = (h * modExp(u.publicKey, challenge, P)) % P;
 
     if (left == right) {
-        std::cout << "ZKP verification successful.\n";
+        cout << "ZKP verification successful.\n";
         return true;
     }
 
-    std::cout << "ZKP verification failed: cryptographic proof mismatch.\n";
+    cout << "ZKP verification failed: cryptographic proof mismatch.\n";
     return false;
 }
 
-
-
 void Blockchain::viewChain() {
     for (const auto &b : chain) {
-        std::cout << "Block #" << b.index
-                  << "\nCreator: " << b.creatorID
-                  << "\nIP Hash: " << b.ipHash
-                  << "\nPrev Hash: " << b.prevHash
-                  << "\nBlock Hash: " << b.blockHash
-                  << "\nTime: " << ctime(&b.timestamp)
-                  << "----------------------\n";
+        cout << "Block #" << b.index
+             << "\nCreator: " << b.creatorID
+             << "\nIP Hash: " << b.ipHash
+             << "\nPrev Hash: " << b.prevHash
+             << "\nBlock Hash: " << b.blockHash
+             << "\nTime: " << ctime(&b.timestamp)
+             << "----------------------\n";
     }
 }

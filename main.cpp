@@ -1,52 +1,56 @@
 #include <iostream>
 #include "blockchain.h"
 
+using namespace std;
+
 int main() {
     srand(time(nullptr));
 
     Blockchain bc;
 
     int choice;
-    std::string user, content;
+     string user, content;
 
     while (true) {
-        std::cout << "\n1. Register User\n"
+        cout << "\n1. Register User\n"
                   << "2. Create Block\n"
                   << "3. Verify Ownership\n"
                   << "4. View Blockchain\n"
                   << "5. Exit\n";
 
-        std::cin >> choice;
-        std::cin.ignore();
+        cin >> choice;
+         cin.ignore();
 
         if (choice == 1) {
-            std::cout << "User ID: ";
-            std::cin >> user;
-            if (bc.registerUser(user))
-                std::cout << "User registered.\n";
-            else
-                std::cout << "User already exists.\n";
+            cout << "User ID: ";
+            cin >> user;
+            if(bc.registerUser(user)){
+                cout << "User registered.\n";
+            }
+            else{
+                cout << "User already exists.\n";
+            }
         }
-        else if (choice == 2) {
-            std::cout << "User ID: ";
-            std::cin >> user;
-            std::cin.ignore();
-            std::cout << "Content: ";
-            getline(std::cin, content);
+        else if(choice == 2){
+            cout << "User ID: ";
+            cin >> user;
+            cin.ignore();
+            cout << "Content: ";
+            getline( cin, content);
             bc.createBlock(user, content);
         }
-        else if (choice == 3) {
-            std::cout << "User ID: ";
-            std::cin >> user;
-            std::cin.ignore();
-            std::cout << "Content: ";
-            getline(std::cin, content);
+        else if (choice == 3){
+            cout << "User ID: ";
+            cin >> user;
+            cin.ignore();
+            cout << "Content: ";
+            getline( cin, content);
             bc.verifyOwnership(user, content);
         }
-        else if (choice == 4) {
+        else if (choice == 4){
             bc.viewChain();
         }
-        else {
+        else{
             break;
         }
     }

@@ -3,7 +3,9 @@
 
 #include <string>
 
-unsigned long djb2Hash(const std::string &input);
+using namespace std;
+
+unsigned long djb2Hash(const string &input);
 int modExp(int base, int exp, int mod);
 
 #endif

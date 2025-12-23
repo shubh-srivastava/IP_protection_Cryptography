@@ -6,23 +6,25 @@
 #include "block.h"
 #include "user.h"
 
+using namespace std;
+
 class Blockchain {
 private:
-    std::vector<Block> chain;
-    std::unordered_map<unsigned long, std::string> ipRegistry;
+    vector<Block> chain;
+    unordered_map<unsigned long, string> ipRegistry;
 
     unsigned long computeBlockHash(const Block &b);
 
 public:
     Blockchain();
 
-    bool registerUser(const std::string &userID);
-    bool createBlock(const std::string &creatorID, const std::string &content);
-    bool verifyOwnership(const std::string &creatorID, const std::string &content);
+    bool registerUser(const string &userID);
+    bool createBlock(const string &creatorID, const string &content);
+    bool verifyOwnership(const string &creatorID, const string &content);
 
     void viewChain();
 
-    std::unordered_map<std::string, User> users;
+    unordered_map<string, User> users;
 };
 
 #endif

@@ -3,12 +3,14 @@
 
 #include <string>
 
+using namespace std;
+
 struct User {
-    std::string id;
+    string id;
     int privateKey;
     int publicKey;
 
-    User(const std::string &uid, int priv, int pub)
+    User(const string &uid, int priv, int pub)
         : id(uid), privateKey(priv), publicKey(pub) {}
 };
 

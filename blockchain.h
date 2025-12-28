@@ -9,13 +9,17 @@
 using namespace std;
 
 class Blockchain {
-private:
+public:
     vector<Block> chain;
     unordered_map<unsigned long, string> ipRegistry;
 
     unsigned long computeBlockHash(const Block &b);
+    const std::vector<Block>& getChain() const {
+        return chain;
+    }
 
-public:
+
+
     Blockchain();
 
     bool registerUser(const string &userID);

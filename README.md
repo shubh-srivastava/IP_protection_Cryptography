@@ -136,6 +136,12 @@ Blocks are cryptographically chained, making tampering detectable.
 - C++17 compatible compiler (GCC / Clang / MSVC)
 - Standard C++ library
 
+### Single step Method 
+* If you have a compatible compiler, you can simply download the " ./zkp_blockchain " file and run it from terminal.
+
+(Windows will probably raise a warning for non-trusted sources, you can ignore it.) 
+
+
 ### Compilation
 ```bash
 g++ main.cpp blockchain.cpp crypto.cpp user.cpp -o zkp_blockchain

@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "json.hpp"
+using json = nlohmann::json;
 
 using namespace std;
 
@@ -120,3 +122,21 @@ void Blockchain::viewChain() {
              << "----------------------\n";
     }
 }
+
+std::string Blockchain::exportChainJSON() const {
+    json arr = json::array();
+
+    for (const auto &b : chain) {
+        arr.push_back({
+            {"index", b.index},
+            {"creator", b.creatorID},
+            {"ipHash", b.ipHash},
+            {"prevHash", b.prevHash},
+            {"blockHash", b.blockHash},
+            {"timestamp", b.timestamp}
+        });
+    }
+
+    return arr.dump(2); // pretty-printed JSON
+}
+

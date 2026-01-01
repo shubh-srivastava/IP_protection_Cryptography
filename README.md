@@ -240,7 +240,7 @@ Expected response:
 
 ---
 
-**Footnotes**
+### Footnotes ###
 * `user.h` and `user.cpp` are included for architectural separation and future extensibility.
 * The ZKP implementation is a proof-of-concept and not production-grade.
 * The `djb2` hashing algorithm is used for simplicity and performance, not cryptographic security.
